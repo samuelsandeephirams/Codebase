@@ -1,0 +1,53 @@
+Using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data;
+using System.Data.SqlClient;
+
+///
+
+
+/// Summary description for OceanBrPresentationLayer
+///
+
+public class OceanBr
+{
+DbAccess db = new DbAccess();
+public OceanBr()
+{
+    //
+    // TODO: Add constructor logic here
+    //
+}
+
+private DataSet oceanbr = new DataSet();
+
+public DataSet OceanBrData
+{
+    get
+    {
+        return oceanbr;
+    }
+    set
+    {
+        oceanbr = value;
+    }
+}
+
+public void OBDropDownValues(string FieldName)
+{
+    try
+    {
+        string strSQL = "[OceanBrDropDownValues] '" + FieldName + "'";
+        if (oceanbr.Tables.Contains("OceanBrDdlValues"))
+        {
+            oceanbr.Tables.Remove("OceanBrDdlValues");
+        }
+        db.selectQuery(oceanbr, strSQL, "OceanBrDdlValues");
+    }
+    catch (Exception ex)
+    {
+        throw ex;
+    }
+}
