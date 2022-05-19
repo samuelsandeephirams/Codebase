@@ -1,0 +1,171 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OBQuotation.aspx.cs" Inherits="OceanBrApplication.OBQuotation" %>
+
+<title></title>
+        </p>
+    </div>
+    <div>
+        <h1 style="font-family: Calibri">Quotation Form</h1>
+    </div>
+    <div>
+        <table style="width: 80%; font-family: Calibri;">
+            <tr>
+                <td>
+                    <asp:Label ID="LblTo" runat="server" Text="To"></asp:Label></td>
+                <td>
+                    <asp:TextBox ID="TxtTo" runat="server"></asp:TextBox></td>
+                <td>
+                    <asp:Label ID="LblQuoteDate" runat="server" Text="Quote Date"></asp:Label></td>
+                <td>
+                    <asp:TextBox ID="TxtQuoteDate" runat="server"></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Label ID="LblAttn" runat="server" Text="Attn"></asp:Label></td>
+                <td>
+                    <asp:TextBox ID="TxtAttN" runat="server"></asp:TextBox></td>
+                <td>
+                    <asp:Label ID="LblQuoteNo" runat="server" Text="Client No"></asp:Label></td>
+                <td>
+                    <asp:TextBox ID="TxtQuoteNo" runat="server"></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Label ID="LblRefNo" runat="server" Text="Ref #"></asp:Label></td>
+                <td>
+                    <asp:TextBox ID="TxtRefNo" runat="server"></asp:TextBox></td>
+                <td>
+                    <asp:Label ID="LblSupplySource" runat="server" Text="Supply Source"></asp:Label></td>
+                <td>
+                    <asp:DropDownList ID="DdlSupplySource" runat="server"></asp:DropDownList>
+                    <asp:TextBox ID="TxtSupplySource" runat="server" Visible="false"></asp:TextBox>
+                    <asp:LinkButton ID="LnBtnSupplySource" runat="server" Text="Add"></asp:LinkButton>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <asp:Label ID="LblEstTimeofDelv" runat="server" Text="Est. Time of Deliv"></asp:Label></td>
+                <td>
+                    <asp:TextBox ID="TxtEstTimeofDelv" runat="server"></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <asp:Label ID="LblOrigin" runat="server" Text="Origin"></asp:Label></td>
+                <td>
+                    <asp:DropDownList ID="DdlOrigin" runat="server"></asp:DropDownList>
+                    <asp:TextBox ID="TxtOrigin" runat="server" Visible="false"></asp:TextBox>
+                    <asp:LinkButton ID="LnBtnOrigin" runat="server" Text="Add"></asp:LinkButton>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div></div>
+    <div>
+        <table style="width: 80%; font-family: Calibri;">
+            <tr>
+                <td>
+                    <asp:Label ID="LblVesselName" runat="server" Text="Vessel Name"></asp:Label></td>
+                <td>
+                    <asp:DropDownList ID="DdlVesselName" runat="server"></asp:DropDownList>
+                    <asp:TextBox ID="TxtVesselName" runat="server" Visible="false"></asp:TextBox>
+                    <asp:LinkButton ID="LnBtnVesselName" runat="server" Text="Add"></asp:LinkButton>
+                </td>
+                <td>
+                    <asp:Label ID="LblEquipment" runat="server" Text="Equipment"></asp:Label></td>
+                <td>
+                    <asp:DropDownList ID="DdlEquipment" runat="server"></asp:DropDownList>
+                    <asp:TextBox ID="TxtEquipment" runat="server" Visible="false"></asp:TextBox>
+                    <asp:LinkButton ID="LnBtnEquipment" runat="server" Text="Add"></asp:LinkButton>
+                </td>
+                <td>
+                    <asp:Label ID="LblModel" runat="server" Text="Model"></asp:Label></td>
+                <td>
+                    <asp:DropDownList ID="DdlModel" runat="server"></asp:DropDownList>
+                    <asp:TextBox ID="TxtModel" runat="server" Visible="false"></asp:TextBox>
+                    <asp:LinkButton ID="LnBtnModel" runat="server" Text="Add"></asp:LinkButton>
+                </td>
+                <td>
+                    <asp:Label ID="LblMaker" runat="server" Text="Maker"></asp:Label></td>
+                <td>
+                    <asp:DropDownList ID="DdlMaker" runat="server"></asp:DropDownList>
+                    <asp:TextBox ID="TxtMaker" runat="server" Visible="false"></asp:TextBox>
+                    <asp:LinkButton ID="LnBtnMaker" runat="server" Text="Add"></asp:LinkButton>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div></div>
+    <div>
+        <table style="font-family: Calibri; width: 80%">
+            <tr>
+                <td>
+                    <asp:ListView ID="LvDropDownValues" runat="server" GroupPlaceholderID="GphDropDownValues"
+                        ItemPlaceholderID="IphDropDownValues">
+                        <LayoutTemplate>
+                            <table style="width: 80%">
+                                <tr>
+                                    <th>S.No
+                                    </th>
+                                    <th>Part No
+                                    </th>
+                                    <th>Description</th>
+                                    <th>Qty
+                                    </th>
+                                    <th>Unit
+                                    </th>
+                                    <th>Unit Price
+                                    </th>
+                                    <th>Total Price
+                                    </th>
+                                </tr>
+                                <asp:PlaceHolder runat="server" ID="GphDropDownValues"></asp:PlaceHolder>
+                                <tr>
+                                    <td>
+                                        <asp:DataPager ID="DatPDropDDownValues" runat="server">
+                                            <Fields>
+                                                <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False" />
+                                                <asp:NumericPagerField />
+                                                <asp:NextPreviousPagerField ButtonType="Button" ShowLastPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False" />
+                                            </Fields>
+                                        </asp:DataPager>
+                                    </td>
+                                </tr>
+                            </table>
+                        </LayoutTemplate>
+                        <GroupTemplate>
+                            <tr>
+                                <asp:PlaceHolder runat="server" ID="IphDropDownValues"></asp:PlaceHolder>
+                            </tr>
+                        </GroupTemplate>
+                        <ItemTemplate>
+                            <td>
+                                <%# Eval("FieldName") %>
+                            </td>
+                            <td>
+                                <%# Eval("Part No") %>
+                            </td>
+                            <td><%# Eval("Description") %></td>
+                            <td>
+                                <%# Eval("Quantity") %>
+                            </td>
+                            <td>
+                                <%# Eval("PartUnit") %>
+                            </td>
+                            <td>
+                                <%# Eval("UnitPrice") %>
+                            </td>
+                            <td>
+                                <%# Eval("TotalPrice") %>
+                            </td>
+                        </ItemTemplate>
+                    </asp:ListView>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+    </div>
+</form>
