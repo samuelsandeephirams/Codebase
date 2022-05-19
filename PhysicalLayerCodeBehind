@@ -1,0 +1,571 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.IO;
+
+namespace OceanBrApplication
+{
+public partial class OBEnquiry : System.Web.UI.Page
+{
+OceanBr oceanbr = new OceanBr();
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!Page.IsPostBack)
+        {
+            PaymentTerms();
+            Terms();
+            Vessel();
+            Equipment();
+            Maker();
+            Model();
+            Shipyard();
+            SupplierName();
+
+            TxtDate.Text = System.DateTime.Today.ToShortDateString();
+            //string a = "ABC";
+            //a.
+            //LblSupplierName.Text = Convert.ToByte(a).ToString();
+            ClientName();
+        }
+    }
+// binding a pull down menu or values in drop down list
+protected void PaymentTerms()
+{
+oceanbr.OBDropDownValues(LblPaymentTerms.Text);
+DdlPaymentTerms.DataSource = oceanbr.OceanBrData.Tables["OceanBrDdlValues"];
+DdlPaymentTerms.DataTextField = "FieldValue";
+DdlPaymentTerms.DataValueField = "FieldId";
+DdlPaymentTerms.DataBind();
+DdlPaymentTerms.Items.Insert(0, new ListItem(""));
+DdlPaymentTerms.SelectedIndex = 0;
+}
+
+    protected void Terms()
+    {
+
+        oceanbr.OBDropDownValues(LblTerms.Text);
+        DdlTerms.DataSource = oceanbr.OceanBrData.Tables["OceanBrDdlValues"];
+        DdlTerms.DataTextField = "FieldValue";
+        DdlTerms.DataValueField = "FieldId";
+        DdlTerms.DataBind();
+        DdlTerms.Items.Insert(0, new ListItem(""));
+        DdlTerms.SelectedIndex = 0;
+    }
+
+    protected void Vessel()
+    {
+        oceanbr.OBDropDownValues(LblVesselName.Text);
+        DdlVesselName.DataSource = oceanbr.OceanBrData.Tables["OceanBrDdlValues"];
+        DdlVesselName.DataTextField = "FieldValue";
+        DdlVesselName.DataValueField = "FieldId";
+        DdlVesselName.DataBind();
+        DdlVesselName.Items.Insert(0, new ListItem(""));
+        DdlVesselName.SelectedIndex = 0;
+    }
+
+    protected void Equipment()
+    {
+        oceanbr.OBDropDownValues(LblEquipment.Text);
+        DdlEquipment.DataSource = oceanbr.OceanBrData.Tables["OceanBrDdlValues"];
+        DdlEquipment.DataTextField = "FieldValue";
+        DdlEquipment.DataValueField = "FieldId";
+        DdlEquipment.DataBind();
+        DdlEquipment.Items.Insert(0, new ListItem(""));
+        DdlEquipment.SelectedIndex = 0;
+    }
+
+    protected void Maker()
+    {
+        oceanbrine.OBDropDownValues(LblMaker.Text);
+        DdlMaker.DataSource = oceanbr.OceanBrData.Tables["OceanBrDdlValues"];
+        DdlMaker.DataTextField = "FieldValue";
+        DdlMaker.DataValueField = "FieldId";
+        DdlMaker.DataBind();
+        DdlMaker.Items.Insert(0, new ListItem(""));
+        DdlMaker.SelectedIndex = 0;
+    }
+
+    protected void Model()
+    {
+        oceanbrine.OBDropDownValues(LblModel.Text);
+        DdlModel.DataSource = oceanbr.OceanBrData.Tables["OceanBrDdlValues"];
+        DdlModel.DataTextField = "FieldValue";
+        DdlModel.DataValueField = "FieldId";
+        DdlModel.DataBind();
+        DdlModel.Items.Insert(0, new ListItem(""));
+        DdlModel.SelectedIndex = 0;
+    }
+
+    protected void Shipyard()
+    {
+        oceanbrine.OBDropDownValues(LblShipyard.Text);
+        DdlShipYard.DataSource = oceanbrine.OceanBrData.Tables["OceanBrDdlValues"];
+        DdlShipYard.DataTextField = "FieldValue";
+        DdlShipYard.DataValueField = "FieldId";
+        DdlShipYard.DataBind();
+        DdlShipYard.Items.Insert(0, new ListItem(""));
+        DdlShipYard.SelectedIndex = 0;
+    }
+
+    protected void SupplierName()
+    {
+        oceanbrine.OBDropDownValues(LblSupplierName.Text);
+        DdlSupplierName.DataSource = oceanbr.OceanBrData.Tables["OceanBrDdlValues"];
+        DdlSupplierName.DataTextField = "FieldValue";
+        DdlSupplierName.DataValueField = "FieldId";
+        DdlSupplierName.DataBind();
+        DdlSupplierName.Items.Insert(0, new ListItem(""));
+        DdlSupplierName.SelectedIndex = 0;
+    }
+
+    protected void ClientName()
+    {            
+        oceanbrine.GetClientName(TxtDate.Text);
+        DdlClient.DataSource = oceanbr.OceanBrData.Tables["ClientNameTd"];
+        DdlClient.DataTextField = "ClientName";
+        DdlClient.DataValueField = "ClientId";
+        DdlClient.DataBind();
+        DdlClient.Items.Insert(0, new ListItem(""));
+        DdlClient.SelectedIndex = 0;
+    }
+
+    protected void BtnUpload_Click(object sender, EventArgs e)
+    {
+        AddEnqAddlDetailsFiles();
+    }
+//uploading a file to a application
+protected void AddEnqAddlDetailsFiles()
+{
+if (FUAdditionalDetail.FileName != "")
+{
+string filename = Path.GetFileName(FUAdditionalDetail.PostedFile.FileName.Replace("'", ""));
+string originalfilename = filename;
+FileInfo info = new FileInfo(filename);
+
+            string folder = Path.GetDirectoryName(filename);
+            string fileName = Path.GetFileNameWithoutExtension(filename);
+            string extension = Path.GetExtension(filename);
+
+            filename = folder + "\\" + fileName + "_" + "" + "_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + extension;
+
+            FUAdditionalDetail.PostedFile.SaveAs(Server.MapPath("EnquiryFiles") + "/" + filename);
+
+            string enId = "";
+            if (DdlClient.SelectedValue != "")
+                enId = DdlClient.SelectedValue; 
+            else
+                enId = LblEnquiryId.Text;
+
+            oceanbr.InsertOBAdditionalDetail(enId, originalfilename, "EnquiryFiles/" + filename, "1");
+
+            LblEnquiryAddDetId.Text = oceanbr.OceanBrData.Tables["EnqAddlDetails"].Rows[0][0].ToString();
+
+            BindEnqAddlDetailsFiles();
+        }
+    }
+//view details by a unique identifier
+protected void BindEnqAddlDetailsFiles()
+{
+string enId = "";
+if (DdlClient.SelectedValue != "")
+enId = DdlClient.SelectedValue;
+else
+enId = LblEnquiryId.Text;
+
+        oceanbrine.ViewOBAdditionalDetail(LblEnquiryAddDetId.Text, enId);
+        DlEnqAddlDet.DataSource = oceanbr.OceanBrData.Tables["EnqAddlDetails"];
+        DlEnqAddlDet.DataBind();
+    }
+
+    protected void BtnSave_Click(object sender, EventArgs e)
+    {
+        AddEnquiryDetails();
+    }
+
+    protected void AddEnquiryDetails()
+    {
+        if (!Page.IsValid)
+        {
+            oceanbr.InsertOBEnquiry(TxtClientName.Text, TxtClientRefNo.Text, TxtClientPIC.Text, TxtDate.Text, DdlPaymentTerms.SelectedValue, DdlTerms.SelectedValue, TxtOurRefNo.Text, "1");
+            if (oceanbr.OceanBrData.Tables["OBEnquiryInsert"].Rows.Count > 0)
+                LblEnquiryId.Text = oceanbr.OceanBrData.Tables["OBEnquiryInsert"].Rows[0][0].ToString();
+
+            if (LblEnquiryId.Text != "")
+            {
+                oceanbr.InsertOBVesselDetail(DdlVesselName.SelectedValue, DdlEquipment.SelectedValue, TxtHullNo.Text, DdlMaker.SelectedValue, DdlShipYard.SelectedValue, DdlModel.SelectedValue, TxtIMO.Text, DdlSupplierName.SelectedValue, LblEnquiryId.Text, "1");
+                if (oceanbr.OceanBrData.Tables["OBVesselInsert"].Rows.Count > 0)
+                    LblVesselId.Text = oceanbr.OceanBrData.Tables["OBEnquiryInsert"].Rows[0][0].ToString();
+
+                ClientName();
+                AddEnqAddlDetailsFiles();
+            }
+            LblMessage.Text = "Enquiry Added";
+            LblMessage.ForeColor.Equals("Green").ToString();
+            Clear();
+
+             
+        }
+        else
+            LblMessage.Text = "Enter Client Detail";
+    }
+
+    protected void BtnSearch_Click(object sender, EventArgs e)
+    { 
+        SearcEnquiryDetails();
+        BindEnqAddlDetailsFiles();
+    }
+
+    protected void SearcEnquiryDetails()
+    {
+        string suppliero, vesselo, equipmento, modelo, makero, shipyardo = "";
+
+        if (DdlSupplierName.SelectedValue == "")
+            suppliero = "";
+        else
+            suppliero = DdlVesselName.SelectedItem.Text;
+
+        if (DdlVesselName.SelectedValue == "")
+            vesselo = "";
+        else
+            vesselo = DdlVesselName.SelectedItem.Text;
+
+        if (DdlEquipment.SelectedValue == "")
+            equipmento = "";
+        else
+            equipmento = DdlEquipment.SelectedItem.Text;
+
+        if (DdlModel.SelectedValue == "")
+            modelo = "";
+        else
+            modelo = DdlModel.SelectedItem.Text;
+
+        if (DdlMaker.SelectedValue == "")
+            makero = "";
+        else
+            makero = DdlMaker.SelectedItem.Text;
+
+        if (DdlShipYard.SelectedValue == "")
+            shipyardo = "";
+        else
+            shipyardo = DdlMaker.SelectedItem.Text;
+
+        oceanbrine.SearchOBEnquiry(TxtClientName.Text, suppliero, vesselo, equipmento, makero, shipyardo, modelo, TxtIMO.Text, TxtHullNo.Text);
+        if (oceanbrine.OceanBrineData.Tables["OBEnquirySearch"].Rows.Count > 0)
+        {
+            GrdVEnquiry.DataSource = oceanbr.OceanBrData.Tables["OBEnquirySearch"];
+            GrdVEnquiry.DataBind();
+        }
+        else
+            LblMessage.Text = "No records";
+    }
+
+    protected void BtnClear_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("OBEnquiry.aspx");
+    }
+
+    protected void DdlPaymentTerms_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (DdlPaymentTerms.SelectedValue == "3")
+        {
+            TxtPaymentTerms.Visible = true;
+            DdlPaymentTerms.Visible = false;
+        }
+    }
+
+    protected void DdlTerms_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (DdlTerms.SelectedValue == "4")
+        {
+            TxtTerms.Visible = true;
+            DdlTerms.Visible = false;
+        }
+    }
+
+    protected void DdlVesselName_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (DdlVesselName.SelectedValue == "5")
+        {
+            TxtVesselName.Visible = true;
+            DdlVesselName.Visible = false;
+        }
+
+    }
+
+    protected void DdlShipYard_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (DdlShipYard.SelectedValue == "6")
+        {
+            TxtShipYard.Visible = true;
+            DdlShipYard.Visible = false;
+        }
+
+    }
+
+    protected void DdlEquipment_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (DdlEquipment.SelectedValue == "7")
+        {
+            TxtEquipment.Visible = true;
+            DdlEquipment.Visible = false;
+        }
+
+    }
+
+    protected void DdlMaker_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (DdlMaker.SelectedValue == "8")
+        {
+            TxtMaker.Visible = true;
+            DdlMaker.Visible = false;
+        }
+
+    }
+
+    protected void DdlModel_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (DdlModel.SelectedValue == "9")
+        {
+            TxtModel.Visible = true;
+            DdlModel.Visible = true;
+        }
+
+    }
+
+    protected void DdlSupplierName_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (DdlSupplierName.SelectedValue == "10")
+        {
+            TxtSupplierName.Visible = true;
+            DdlSupplierName.Visible = false;
+        }
+
+    }
+
+
+
+    protected void LbPaymentTerms_Click(object sender, EventArgs e)
+    {
+        if (LbPaymentTerms.Text == "Save")
+        {
+            oceanbr.InsertOBDropDownValue(LblPaymentTerms.Text, TxtPaymentTerms.Text, "1");
+            LbPaymentTerms.Text = "Add";
+            TxtPaymentTerms.Visible = false;
+            DdlPaymentTerms.Visible = true;
+
+            PaymentTerms();
+        }
+        else if (LbPaymentTerms.Text == "Add")
+        {
+            TxtPaymentTerms.Visible = true;
+            DdlPaymentTerms.Visible = false;
+            LbPaymentTerms.Text = "Save";
+        }
+    }
+
+    protected void LbTerms_Click(object sender, EventArgs e)
+    {
+        if (LbTerms.Text == "Save")
+        {
+            oceanbr.InsertOBDropDownValue(LblTerms.Text, TxtTerms.Text, "");
+            LbTerms.Text = "Add";
+            TxtTerms.Visible = false;
+            DdlTerms.Visible = true;
+
+            Terms();
+        }
+        else if (LbTerms.Text == "Add")
+        {
+            TxtTerms.Visible = true;
+            DdlTerms.Visible = false;
+            LbTerms.Text = "Save";
+        }
+    }
+
+    protected void LbVesselName_Click(object sender, EventArgs e)
+    {
+        if (LbVesselName.Text == "Save")
+        {
+            oceanbr.InsertOBDropDownValue(LblVesselName.Text, TxtVesselName.Text, "");
+            LbVesselName.Text = "Add";
+            TxtVesselName.Visible = false;
+            DdlVesselName.Visible = true;
+
+            Vessel();
+        }
+        else if (LbVesselName.Text == "Add")
+        {
+            TxtVesselName.Visible = true;
+            DdlVesselName.Visible = false;
+            LbVesselName.Text = "Save";
+        }
+    }
+
+    protected void LbEquipment_Click(object sender, EventArgs e)
+    {
+        if (LbEquipment.Text == "Save")
+        {
+            oceanbr.InsertOBDropDownValue(LblEquipment.Text, TxtEquipment.Text, "");
+            LbEquipment.Text = "Add";
+            TxtEquipment.Visible = false;
+            DdlEquipment.Visible = true;
+
+            Equipment();
+        }
+        else if (LbEquipment.Text == "Add")
+        {
+            TxtEquipment.Visible = true;
+            DdlEquipment.Visible = false;
+            LbEquipment.Text = "Save";
+        }
+    }
+
+    protected void LbMaker_Click(object sender, EventArgs e)
+    {
+        if (LbMaker.Text == "Save")
+        {
+            oceanbr.InsertOBDropDownValue(LblMaker.Text, TxtMaker.Text, "");
+            LbMaker.Text = "Add";
+            TxtMaker.Visible = false;
+            DdlMaker.Visible = true;
+
+            Maker();
+        }
+        else if (LbMaker.Text == "Add")
+        {
+            TxtMaker.Visible = true;
+            DdlMaker.Visible = false;
+            LbMaker.Text = "Save";
+        }
+
+    }
+
+    protected void LbModel_Click(object sender, EventArgs e)
+    {
+        if (LbModel.Text == "Save")
+        {
+            oceanbr.InsertOBDropDownValue(LblModel.Text, TxtModel.Text, "");
+            LbModel.Text = "Add";
+            TxtModel.Visible = false;
+            DdlModel.Visible = true;
+
+
+            Model();
+        }
+        else if (LbModel.Text == "Add")
+        {
+            TxtModel.Visible = true;
+            DdlModel.Visible = false;
+            LbModel.Text = "Save";
+        }
+    }
+
+    protected void LbSupplierName_Click(object sender, EventArgs e)
+    {
+        if (LbSupplierName.Text == "Save")
+        {
+            oceanbr.InsertOBDropDownValue(LblSupplierName.Text, TxtSupplierName.Text, "");
+            LbSupplierName.Text = "Add";
+            TxtSupplierName.Visible = false;
+            DdlSupplierName.Visible = true;
+
+            SupplierName();
+        }
+        else if (LbSupplierName.Text == "Add")
+        {
+            TxtSupplierName.Visible = true;
+            DdlSupplierName.Visible = false;
+            LbSupplierName.Text = "Save";
+        }
+    }
+
+    protected void LbShipYard_Click(object sender, EventArgs e)
+    {
+        if (LbShipYard.Text == "Save")
+        {
+            oceanbr.InsertOBDropDownValue(LblShipyard.Text, TxtShipYard.Text, "");
+            LbShipYard.Text = "Add";
+            TxtShipYard.Visible = false;
+            DdlShipYard.Visible = true;
+
+            Shipyard();
+        }
+        else if (LbShipYard.Text == "Add")
+        {
+            TxtShipYard.Visible = true;
+            DdlShipYard.Visible = false;
+            LbShipYard.Text = "Save";
+        }
+    }
+
+    protected void LbStatus_Click(object sender, EventArgs e)
+    {
+        if (LbStatus.Text == "Save")
+        {
+            oceanbr.InsertOBDropDownValue(LblStatus.Text, TxtStatus.Text, "");
+            LbStatus.Text = "Add";
+            TxtStatus.Visible = false;
+            DdlStatus.Visible = true;
+
+            Shipyard();
+        }
+        else if (LbShipYard.Text == "Add")
+        {
+            TxtStatus.Visible = true;
+            DdlStatus.Visible = false;
+            LbStatus.Text = "Save";
+        }
+    }
+
+    protected void Clear()
+    {
+        TxtClientName.Text = "";
+        TxtClientRefNo.Text = "";
+        TxtClientPIC.Text = "";
+        DdlPaymentTerms.ClearSelection();
+        DdlTerms.ClearSelection();
+        TxtOurRefNo.Text = "";
+        DdlVesselName.ClearSelection();
+        TxtHullNo.Text = "";
+        DdlShipYard.ClearSelection();
+        TxtIMO.Text = "";
+        DdlEquipment.ClearSelection();
+        DdlMaker.ClearSelection();
+        DdlModel.ClearSelection();
+        DdlSupplierName.ClearSelection();
+        LblEnquiryId.Text = "";
+        LblEnquiryAddDetId.Text = "";
+        LblVesselId.Text = "";
+    }
+//view the attachment
+protected void LbViewAddlDet_Click(object sender, EventArgs e)
+{
+string enId = "";
+if (DdlClient.SelectedValue != "")
+enId = DdlClient.SelectedValue;
+else
+enId = LblEnquiryId.Text;
+
+        oceanbr.ViewOBAdditionalDetail(LblEnquiryAddDetId.Text, enId);
+        if (oceanbr.OceanBrData.Tables["EnqAddlDetails"].Rows.Count > 0)
+        {
+            string filepath = oceanbr.OceanBrData.Tables["EnqAddlDetails"].Rows[0][3].ToString();
+
+            Response.Clear();
+            Page.EnableViewState = false;
+            Response.ContentType = @"application\octet-stream";
+            System.IO.FileInfo file = new System.IO.FileInfo(Server.MapPath(filepath));
+            Response.AddHeader("Content-Disposition", "attachment; filename=\"" + file.Name + "\"");
+            Response.AddHeader("Content-Length", file.Length.ToString());
+            Response.ContentType = "application/octet-stream";
+            Response.WriteFile(file.FullName);
+            Response.Flush();
+            Response.End();
+        }
+    }
+}
+}
