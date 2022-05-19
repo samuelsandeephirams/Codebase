@@ -1,0 +1,74 @@
+Data analysis is the process of collecting, modeling, and analyzing data to extract insights that support decision-making.
+
+Data Analysis is done as per the business requirements. The below can be explained. 
+#Informed decision-making
+#Target customers better
+#Reduce costs
+
+####How can we do Data Analysis
+
+#Identify -> Collect -> Clean -> Analyse -> Interpret
+
+Identify the data or details
+Data has to be collected from various entities
+Cleaning data - data may not be appropriate
+Analyse - various trends that can be shows with the detail. KPI's. 
+Interpret - summary highlighting the understanding based on the details.
+
+####Data Analysis Types
+
+#Descriptive analysis 
+#Exploratory analysis 
+#Diagnostic analysis 
+#Predictive analysis 
+#Prescriptive analysis 
+
+1. Cluster analysis
+2. Cohort analysis
+3. Regression analysis
+4. Neural networks
+5. Factor analysis
+6. Data mining
+7. Text analysis
+8. Time series analysis
+9. Decision Trees 
+10. Conjoint analysis 
+
+####How To Analyze Data? Data Analysis Techniques To Apply
+
+1. Collaborate your needs
+2. Establish your questions
+3. Data democratization
+4. Think of governance 
+5. Clean your data
+6. Set your KPIs
+7. Identify Useless data
+8. Build a data management roadmap
+9. Integrate technology
+10. Answer your questions
+11. Visualize your data
+Primary KPIs:
+12. Be careful with interpretation
+13. Build a narrative
+14. Consider autonomous technology
+15. Share the load
+16. Data analysis tools
+17. Refine your process constantly 
+
+
+####Quality Criteria For Data Analysis 
+
+#Internal validity 
+#External validity 
+#Reliability
+#Objectivity  
+
+####Data Analysis Limitations & Barriers 
+
+#Objectivity 
+#Flawed correlation
+#Privacy concerns
+#Lack of communication between teams 
+#Innumeracy
+
+Referred this url - https://www.datapine.com/blog/data-analysis-methods-and-techniques/#data-analysis-definition 
